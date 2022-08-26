@@ -1,0 +1,65 @@
+interactions:
+- request:
+    body: from=postmaster%40sandboxd73a12cf12cc4d09b3624171e7997575.mailgun.org&to=Jake+Romer+%3Cjake%40conclave.digital%3E&subject=A+question%3F&text=Is+this+your+email+address%3F
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '170'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://api.mailgun.net/v3/sandboxd73a12cf12cc4d09b3624171e7997575.mailgun.org/messages
+  response:
+    body:
+      string: '{"id":"<20220827132259.a547ede4279ad6a5@sandboxd73a12cf12cc4d09b3624171e7997575.mailgun.org>","message":"Queued.
+        Thank you."}
+
+        '
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Content-Type, X-Mailgun-Requestor, x-requested-with, Authorization
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '600'
+      Cache-Control:
+      - no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '126'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 27 Aug 2022 13:22:59 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Ratelimit-Limit:
+      - '4000000'
+      X-Ratelimit-Remaining:
+      - '3999999'
+      X-Ratelimit-Reset:
+      - '1661606589627'
+      X-Recipient-Limit:
+      - '2000000'
+      X-Recipient-Remaining:
+      - '1999999'
+      X-Recipient-Reset:
+      - '1661606589625'
+    status:
+      code: 200
+      message: OK
+version: 1

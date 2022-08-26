@@ -1,0 +1,49 @@
+interactions:
+- request:
+    body: '{"personalizations":[{"to":[{"email":"jake@conclave.digital"}]}],"from":{"email":"jake@conclave.digital"},"subject":"A
+      question?","content":[{"type":"text\/html","value":"Is this your email address?"}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '202'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.1
+    method: POST
+    uri: https://api.sendgrid.com/v3/mail/send
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type, On-behalf-of, x-sg-elas-acl
+      Access-Control-Allow-Methods:
+      - POST
+      Access-Control-Allow-Origin:
+      - https://sendgrid.api-docs.io
+      Access-Control-Max-Age:
+      - '600'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Sat, 27 Aug 2022 13:39:34 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=600; includeSubDomains
+      X-Message-Id:
+      - Z2Uffr5jRmuHVYILRrIQIw
+      X-No-CORS-Reason:
+      - https://sendgrid.com/docs/Classroom/Basics/API/cors.html
+    status:
+      code: 202
+      message: Accepted
+version: 1
