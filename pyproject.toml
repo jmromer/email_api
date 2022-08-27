@@ -12,6 +12,7 @@ requests = "^2.28.1"
 ujson = "^5.4.0"
 uvicorn = "^0.18.3"
 email-validator = "^1.2.1"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
@@ -22,11 +23,13 @@ httpx = "^0.23.0"
 anyio = "^3.6.1"
 trio = "^0.21.0"
 pytest-recording = "^0.12.1"
+pytest-mock = "^3.8.2"
+ipdb = "^0.13.9"
 
 [tool.pytest.ini_options]
 minversion = 6.0
 addopts = "-ra --quiet --block-network --record-mode=once"
-required_plugins = "pytest-recording"
+required_plugins = ["pytest-recording", "pytest-mock"]
 testpaths = ["tests"]
 
 [build-system]

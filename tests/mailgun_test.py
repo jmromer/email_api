@@ -1,5 +1,6 @@
 import pytest
 import requests
+
 from lib.mailgun import Mailgun
 
 
