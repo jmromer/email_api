@@ -11,7 +11,7 @@ class Mailer:
     MAILER_SERVICE = os.getenv("MAILER_SERVICE", "mailgun")
 
     @classmethod
-    def send_mail(cls, **args):
+    def send_mail(cls, **args) -> bool:
         """Send an email using the configured mailer service."""
         if cls.MAILER_SERVICE == "mailgun":
             return Mailgun.send_mail(**args)
@@ -32,7 +32,7 @@ class Sendgrid:
         subject: str,
         body: str,
         sender: Optional[str] = None,
-    ):
+    ) -> bool:
         url = f"{cls.BASE_URL}/{cls.VERSION}/mail/send"
         headers = {
             "Authorization": f"Bearer {cls.AUTH_KEY}",
@@ -62,7 +62,7 @@ class Mailgun:
         subject: str,
         body: str,
         sender: Optional[str] = None,
-    ):
+    ) -> bool:
         url = f"{cls.BASE_URL}/{cls.VERSION}/{cls.DOMAIN}/messages"
         data = {
             "from": sender or cls.DEFAULT_SENDER,
@@ -72,6 +72,3 @@ class Mailgun:
         }
         resp = requests.post(url, auth=("api", cls.AUTH_KEY), data=data)
         return resp.status_code == requests.codes.ok
-
-
-mailer = Mailgun

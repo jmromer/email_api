@@ -25,12 +25,25 @@ trio = "^0.21.0"
 pytest-recording = "^0.12.1"
 pytest-mock = "^3.8.2"
 ipdb = "^0.13.9"
+pytest-mypy = "^0.9.1"
+types-requests = "^2.28.9"
+types-ujson = "^5.4.0"
+types-beautifulsoup4 = "^4.11.5"
 
 [tool.pytest.ini_options]
 minversion = 6.0
-addopts = "-ra --quiet --block-network --record-mode=once"
-required_plugins = ["pytest-recording", "pytest-mock"]
+addopts = "-ra --quiet --block-network --record-mode=once --mypy"
+required_plugins = ["pytest-recording", "pytest-mock", "pytest-mypy"]
 testpaths = ["tests"]
+
+[tool.mypy]
+allow_redefinition = true
+warn_unreachable = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["email_validator.*"]
+ignore_missing_imports = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
