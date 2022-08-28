@@ -14,11 +14,11 @@ async def test_healthcheck():
 
 
 @pytest.mark.anyio
-async def test_send_email(mocker):
+async def test_send_email_success(mocker):
     message = {
-        "to_email": "fake@example.com",
+        "to": "fake@example.com",
         "to_name": "Mr. Fake",
-        "from_email": "no-reply@fake.com",
+        "from": "no-reply@fake.com",
         "from_name": "Ms. Fake",
         "subject": "A message from The Fake Family",
         "body": "<h1>Your Bill</h1><p>$10</p>",
@@ -34,3 +34,19 @@ async def test_send_email(mocker):
         subject="A message from The Fake Family",
         body="Your Bill\n$10",
     )
+
+
+@pytest.mark.anyio
+async def test_send_email_invalid_request(mocker):
+    message = {
+        "to": "",
+        "to_name": "Mr. Fake",
+        "from": "no-reply@fake.com",
+        "from_name": "Ms. Fake",
+        "subject": "A message from The Fake Family",
+        "body": "<h1>Your Bill</h1><p>$10</p>",
+    }
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.post("/email", json=message)
+    assert response.status_code == 422
+    assert "email address is not valid" in response.json().get("detail")
