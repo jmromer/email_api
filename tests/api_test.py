@@ -23,12 +23,12 @@ async def test_send_email_success(mocker):
         "subject": "A message from The Fake Family",
         "body": "<h1>Your Bill</h1><p>$10</p>",
     }
-    mocker.patch("lib.mailgun.mailer")
+    mocker.patch("lib.mailers.Mailgun")
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post("/email", json=message)
 
     assert response.status_code == 200
-    lib.mailgun.mailer.send_mail.assert_called_once_with(
+    lib.mailers.Mailgun.send_mail.assert_called_once_with(
         sender="Ms. Fake <no-reply@fake.com>",
         recipient="Mr. Fake <fake@example.com>",
         subject="A message from The Fake Family",

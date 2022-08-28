@@ -2,9 +2,8 @@ from bs4 import BeautifulSoup
 from email_validator import EmailNotValidError, validate_email
 from fastapi import FastAPI, HTTPException
 
-from .models import Email
-from .mailer import Mailer
-
+from lib.mailers import Mailer
+from lib.models import Email
 
 app = FastAPI()
 
