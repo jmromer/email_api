@@ -1,9 +1,9 @@
-import os
-
 from bs4 import BeautifulSoup
 from email_validator import EmailNotValidError, validate_email
 from fastapi import FastAPI
 from pydantic import BaseModel
+
+from lib.mailer import Mailer
 
 
 class Email(BaseModel):
@@ -14,10 +14,6 @@ class Email(BaseModel):
     subject: str
     body: str
 
-
-# The mailer service to use. Should be the module name of an API wrapper class
-# that responds to `.send_mail`.
-MAILER_SERVICE = os.getenv("MAILER_SERVICE", "mailgun")
 
 app = FastAPI()
 
@@ -36,9 +32,7 @@ async def send_email(email: Email):
     except EmailNotValidError as e:
         return {"status": "error", "message": str(e)}
 
-    # send an email using the configured mailer service
-    mailer = getattr(__import__("lib"), MAILER_SERVICE).mailer
-    if mailer.send_mail(
+    if Mailer.send_mail(
         sender=f"{email.from_name} <{from_validated.email}>",
         recipient=f"{email.to_name} <{to_validated.email}>",
         subject=email.subject,
