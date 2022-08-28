@@ -1,18 +1,9 @@
 from bs4 import BeautifulSoup
 from email_validator import EmailNotValidError, validate_email
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
 
-from lib.mailer import Mailer
-
-
-class Email(BaseModel):
-    to_email: str = Field(str, alias="to")
-    to_name: str
-    from_email: str = Field(str, alias="from")
-    from_name: str
-    subject: str
-    body: str
+from .models import Email
+from .mailer import Mailer
 
 
 app = FastAPI()
