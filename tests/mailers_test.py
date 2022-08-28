@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from lib.mailers import Mailgun, Sendgrid
+from email_api.mailers import Mailgun, Sendgrid
 
 
 @pytest.mark.vcr

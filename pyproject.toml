@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Jake Romer <jake@jmromer.org>"]
 
+[tool.poetry.scripts]
+test = "src.scripts:test"
+start = "src.scripts:start"
+
 [tool.poetry.dependencies]
 python = "^3.9"
 python-dotenv = "^0.20.0"

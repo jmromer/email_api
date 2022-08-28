@@ -3,9 +3,9 @@ import os
 import pytest
 from httpx import AsyncClient
 
-import lib
-from lib.api import app
-from lib.mailers import UnrecognizedMailer
+import email_api
+from email_api.api import app
+from email_api.mailers import UnrecognizedMailer
 
 
 @pytest.mark.anyio
@@ -18,7 +18,7 @@ async def test_healthcheck():
 
 @pytest.mark.anyio
 async def test_send_email_success(mocker):
-    mocker.patch("lib.mailers.Mailgun")
+    mocker.patch("email_api.mailers.Mailgun")
     message = {
         "to": "fake@example.com",
         "to_name": "Mr. Fake",
@@ -32,7 +32,7 @@ async def test_send_email_success(mocker):
         response = await ac.post("/email", json=message)
 
     assert response.status_code == 200
-    lib.mailers.Mailgun.send_mail.assert_called_once_with(
+    email_api.mailers.Mailgun.send_mail.assert_called_once_with(
         sender="Ms. Fake <no-reply@fake.com>",
         recipient="Mr. Fake <fake@example.com>",
         subject="A message from The Fake Family",
@@ -43,7 +43,7 @@ async def test_send_email_success(mocker):
 @pytest.mark.anyio
 async def test_send_email_success_with_sendgrid(mocker, monkeypatch):
     monkeypatch.setenv("MAILER_SERVICE", "Sendgrid")
-    mocker.patch("lib.mailers.Sendgrid")
+    mocker.patch("email_api.mailers.Sendgrid")
     message = {
         "to": "fake@example.com",
         "to_name": "Mr. Fake",
@@ -57,7 +57,7 @@ async def test_send_email_success_with_sendgrid(mocker, monkeypatch):
         response = await ac.post("/email", json=message)
 
     assert response.status_code == 200
-    lib.mailers.Sendgrid.send_mail.assert_called_once_with(
+    email_api.mailers.Sendgrid.send_mail.assert_called_once_with(
         sender="Ms. Fake <no-reply@fake.com>",
         recipient="Mr. Fake <fake@example.com>",
         subject="A message from The Fake Family",
