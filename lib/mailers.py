@@ -1,4 +1,5 @@
 import os
+import sys
 from typing import Optional
 
 import requests
@@ -6,17 +7,17 @@ import ujson
 
 
 class Mailer:
-    # The mailer service to use. Should be the module name of an API wrapper
-    # class that responds to `.send_mail`.
-    MAILER_SERVICE = os.getenv("MAILER_SERVICE", "mailgun")
-
     @classmethod
     def send_mail(cls, **args) -> bool:
         """Send an email using the configured mailer service."""
-        if cls.MAILER_SERVICE == "mailgun":
-            return Mailgun.send_mail(**args)
-        elif cls.MAILER_SERVICE == "sendgrid":
-            return Sendgrid.send_mail(**args)
+        # The mailer service to use. Should be the name of an API wrapper class that
+        # responds to class method `.send_mail`.
+        mailer_service = os.getenv("MAILER_SERVICE", "Mailgun")
+        try:
+            mailer = getattr(sys.modules[__name__], mailer_service)
+            return mailer.send_mail(**args)
+        except AttributeError:
+            raise UnrecognizedMailer
 
 
 class Sendgrid:
@@ -72,3 +73,11 @@ class Mailgun:
         }
         resp = requests.post(url, auth=("api", cls.AUTH_KEY), data=data)
         return resp.status_code == requests.codes.ok
+
+
+class MailerException(Exception):
+    pass
+
+
+class UnrecognizedMailer(MailerException):
+    pass
